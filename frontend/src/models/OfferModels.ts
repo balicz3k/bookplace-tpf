@@ -93,3 +93,12 @@ export interface GetOffersParams {
   Bathrooms?: number;
 }
 
+export interface HostOfferSummary {
+    id: number;
+    title: string;
+    pricePerNight: number;
+    status: 'Active' | 'Inactive' | 'Archived';
+    fullAddress: string;
+    offerType: OfferType;
+    coverPhoto: OfferPhoto | null;
+}
