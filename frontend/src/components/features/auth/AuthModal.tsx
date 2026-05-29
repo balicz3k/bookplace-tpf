@@ -1,5 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { Dialog, DialogContent, Box, Tabs, Tab, Alert } from '@mui/material';
+import { FirebaseError } from 'firebase/app';
 import { useAuth, type LoginInput, type RegisterInput } from '../../../hooks/useAuth';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
@@ -28,6 +29,28 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other })
   </div>
 );
 
+const getAuthErrorMessage = (error: unknown, fallback: string) => {
+  if (error instanceof FirebaseError) {
+    switch (error.code) {
+      case 'auth/invalid-email':
+        return 'Nieprawidlowy adres email.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':
+        return 'Nieprawidlowy email lub haslo.';
+      case 'auth/email-already-in-use':
+        return 'Ten adres email jest juz zajety.';
+      case 'auth/weak-password':
+        return 'Haslo jest zbyt slabe.';
+      case 'auth/too-many-requests':
+        return 'Zbyt wiele prob. Sprobuj ponownie pozniej.';
+      default:
+        return fallback;
+    }
+  }
+  return error instanceof Error ? error.message : fallback;
+};
+
 const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, initialTab = 'login' }) => {
   const [tabValue, setTabValue] = useState(initialTab === 'login' ? 0 : 1);
   const [error, setError] = useState('');
@@ -48,7 +71,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, initialTab = 'logi
       await login(data);
       onClose();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      setError(getAuthErrorMessage(err, 'Logowanie nie powiodlo sie'));
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +85,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, initialTab = 'logi
       await register(data);
       onClose();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Registration failed');
+      setError(getAuthErrorMessage(err, 'Rejestracja nie powiodla sie'));
     } finally {
       setIsLoading(false);
     }
