@@ -1,5 +1,5 @@
 ﻿import { useState, useMemo } from 'react';
-import { Box, Typography, Alert, useTheme } from '@mui/material';
+import { Box, Typography, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import type { HostBooking, HostBookingFilters } from '../../models/HostModels';
 
@@ -48,7 +48,6 @@ const MOCK_BOOKINGS: HostBooking[] = [
 const PAGE_SIZE = 6;
 
 export default function HostBookingsPage() {
-    const theme = useTheme();
     const navigate = useNavigate();
     const [pageNumber, setPageNumber] = useState(1);
 

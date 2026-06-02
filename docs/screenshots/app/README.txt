@@ -1,0 +1,13 @@
+Wrzu� tu screeny aplikacji (PNG/JPG), np.:
+- landing.png
+- search.png
+- offer.png
+- checkout.png
+- booking-confirmation.png
+- my-bookings.png
+- inbox.png
+- host-dashboard.png
+- host-bookings.png
+- host-calendar.png
+- host-add-offer.png
+- login-modal.png
