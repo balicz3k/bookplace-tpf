@@ -6,7 +6,7 @@ Aplikacja jest w pełni frontendowa — autentykacja realizowana jest przez **Fi
 
 ## Live demo
 
-> **URL produkcyjny:** _do uzupełnienia po deploymencie na Vercelu_ — np. `https://book-place-tpf.vercel.app`
+> **URL produkcyjny:** [https://bookplace-jkzehz4xz-balicz3ks-projects.vercel.app](https://bookplace-jkzehz4xz-balicz3ks-projects.vercel.app)
 
 Deploy: **Vercel** (auto-deploy z gałęzi `main`).
 
