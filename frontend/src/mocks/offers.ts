@@ -2,12 +2,12 @@
 import type { OfferHost } from '../models/HostModel';
 
 const buildPhoto = (id: number, folder: string, baseName: string): OfferPhoto => {
-  const basePath = `../assets/mockPhotos/offers/${folder}/${baseName}`;
+  const basePath = `/mockPhotos/offers/${folder}/${baseName}`;
   return {
     id,
-    originalUrl: new URL(`${basePath}_original.jpg`, import.meta.url).href,
-    mediumUrl: new URL(`${basePath}_medium.jpg`, import.meta.url).href,
-    thumbnailUrl: new URL(`${basePath}_thumb.jpg`, import.meta.url).href,
+    originalUrl: `${basePath}_original.jpg`,
+    mediumUrl: `${basePath}_medium.jpg`,
+    thumbnailUrl: `${basePath}_thumb.jpg`,
     isCover: true,
     sortOrder: 0,
   };
@@ -301,21 +301,21 @@ export const mockOffers: OfferSummary[] = [
 ];
 
 // --- OfferDetail mocks ---
-// Photos are resolved at build time via Vite's import.meta.glob so we don't
-// have to hardcode the long timestamped filenames per offer.
+// Photos are served from /public/mockPhotos/ (static assets, no bundling needed).
 
-const originalUrlByPath = import.meta.glob<string>(
-  '../assets/mockPhotos/offers/*/*_original.jpg',
-  { eager: true, query: '?url', import: 'default' }
-);
-const mediumUrlByPath = import.meta.glob<string>(
-  '../assets/mockPhotos/offers/*/*_medium.jpg',
-  { eager: true, query: '?url', import: 'default' }
-);
-const thumbUrlByPath = import.meta.glob<string>(
-  '../assets/mockPhotos/offers/*/*_thumb.jpg',
-  { eager: true, query: '?url', import: 'default' }
-);
+const OFFER_PHOTO_BASES: Record<string, string[]> = {
+  offer1:  ['offer1_photo_0_1764289814'],
+  offer2:  ['offer2_photo_0_1764289906','offer2_photo_1_1764289907','offer2_photo_2_1764289907','offer2_photo_3_1764289907','offer2_photo_4_1764289908','offer2_photo_5_1764289908'],
+  offer3:  ['offer3_photo_0_1764331330','offer3_photo_1_1764331330','offer3_photo_2_1764331330','offer3_photo_3_1764331330','offer3_photo_4_1764331330'],
+  offer4:  ['offer4_photo_0_1764331488','offer4_photo_1_1764331488','offer4_photo_2_1764331488','offer4_photo_3_1764331488','offer4_photo_4_1764331488'],
+  offer5:  ['offer5_photo_0_1764334090','offer5_photo_1_1764334090','offer5_photo_2_1764334090','offer5_photo_3_1764334090','offer5_photo_4_1764334090'],
+  offer6:  ['offer6_photo_0_1764334512','offer6_photo_1_1764334512','offer6_photo_2_1764334512','offer6_photo_3_1764334512','offer6_photo_4_1764334512'],
+  offer7:  ['offer7_photo_0_1764334622','offer7_photo_1_1764334622','offer7_photo_2_1764334622','offer7_photo_3_1764334622','offer7_photo_4_1764334622'],
+  offer8:  ['offer8_photo_0_1764334720','offer8_photo_1_1764334720','offer8_photo_2_1764334720','offer8_photo_3_1764334720','offer8_photo_4_1764334720'],
+  offer9:  ['offer9_photo_0_1764334835','offer9_photo_1_1764334835','offer9_photo_2_1764334835','offer9_photo_3_1764334835','offer9_photo_4_1764334835'],
+  offer10: ['offer10_photo_0_1764329910','offer10_photo_1_1764329911','offer10_photo_2_1764329911','offer10_photo_3_1764329911','offer10_photo_4_1764329911','offer10_photo_5_1764329911'],
+  offer11: ['offer11_photo_0_1764330234','offer11_photo_1_1764330234','offer11_photo_2_1764330234','offer11_photo_3_1764330234','offer11_photo_4_1764330234','offer11_photo_5_1764330234'],
+};
 
 interface ResolvedPhoto {
   base: string;
@@ -325,21 +325,14 @@ interface ResolvedPhoto {
 }
 
 const resolvePhotosForFolder = (folder: string): ResolvedPhoto[] => {
-  const prefix = `../assets/mockPhotos/offers/${folder}/`;
-  const result: ResolvedPhoto[] = [];
-  for (const path of Object.keys(originalUrlByPath)) {
-    if (!path.startsWith(prefix)) continue;
-    const base = path.slice(prefix.length).replace('_original.jpg', '');
-    const mediumPath = `${prefix}${base}_medium.jpg`;
-    const thumbPath = `${prefix}${base}_thumb.jpg`;
-    result.push({
-      base,
-      original: originalUrlByPath[path],
-      medium: mediumUrlByPath[mediumPath] ?? originalUrlByPath[path],
-      thumb: thumbUrlByPath[thumbPath] ?? originalUrlByPath[path],
-    });
-  }
-  return result.sort((a, b) => a.base.localeCompare(b.base));
+  const bases = OFFER_PHOTO_BASES[folder] ?? [];
+  const root = `/mockPhotos/offers/${folder}`;
+  return bases.map((base) => ({
+    base,
+    original: `${root}/${base}_original.jpg`,
+    medium:   `${root}/${base}_medium.jpg`,
+    thumb:    `${root}/${base}_thumb.jpg`,
+  }));
 };
 
 const buildPhotosForOffer = (offerIdSeed: number, folder: string): OfferPhoto[] => {

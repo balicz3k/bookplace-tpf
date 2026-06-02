@@ -7,8 +7,8 @@ import HostBookingFiltersComponent from "../../components/features/host/HostBook
 import HostBookingListItem from "../../components/features/host/HostBookingListItem";
 import PaginationControls from "../../components/common/PaginationControls";
 
-const OFFER_IMAGE_1 = new URL('../../assets/mockPhotos/offers/offer1/offer1_photo_0_1764289814_thumb.jpg', import.meta.url).href;
-const OFFER_IMAGE_2 = new URL('../../assets/mockPhotos/offers/offer2/offer2_photo_0_1764289906_thumb.jpg', import.meta.url).href;
+const OFFER_IMAGE_1 = '/mockPhotos/offers/offer1/offer1_photo_0_1764289814_thumb.jpg';
+const OFFER_IMAGE_2 = '/mockPhotos/offers/offer2/offer2_photo_0_1764289906_thumb.jpg';
 
 const MOCK_BOOKINGS: HostBooking[] = [
     {

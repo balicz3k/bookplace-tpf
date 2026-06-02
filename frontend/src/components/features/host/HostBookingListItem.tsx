@@ -64,7 +64,7 @@ const HostBookingListItem: React.FC<HostBookingListItemProps> = ({ booking, navi
         if (booking.offerThumbnailUrl) {
             return booking.offerThumbnailUrl;
         }
-        return new URL('../../../assets/mockPhotos/offers/offer3/offer3_photo_0_1764331330_thumb.jpg', import.meta.url).href;
+        return '/mockPhotos/offers/offer3/offer3_photo_0_1764331330_thumb.jpg';
     };
 
     const isUpcoming = booking.status === 'upcoming';
