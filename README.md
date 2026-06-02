@@ -1,83 +1,80 @@
 # BookPlace
 
-Projekt zaliczeniowy z przedmiotu **Techniki Projektowania Frontendowego** (TPF). Aplikacja webowa wzorowana na serwisach typu Airbnb / Booking, pozwalaj�ca przegl�da� oferty noclegowe, rezerwowa� pobyty, prowadzi� panel hosta i czat mi�dzy go��ciem a gospodarzem.
+Projekt zaliczeniowy z przedmiotu **Techniki Projektowania Frontendowego** (TPF). Aplikacja webowa wzorowana na serwisach typu Airbnb / Booking, pozwalająca przeglądać oferty noclegowe, rezerwować pobyty, prowadzić panel hosta i czat między gościem a gospodarzem.
 
-Aplikacja jest w pe�ni frontendowa � autentykacja realizowana jest przez **Firebase Authentication** (BaaS, dzia�a bez w�asnego backendu), pozosta�e dane (oferty, rezerwacje, czat, recenzje) pochodz� z mock�w w [frontend/src/mocks/](frontend/src/mocks/).
+Aplikacja jest w pełni frontendowa — autentykacja realizowana jest przez **Firebase Authentication** (BaaS, działa bez własnego backendu), pozostałe dane (oferty, rezerwacje, czat, recenzje) pochodzą z mocków w [frontend/src/mocks/](frontend/src/mocks/).
 
 ## Live demo
 
-> **URL produkcyjny:** _do uzupe�nienia po deploy�u Vercela_ � np. `https://book-place-tpf.vercel.app`
+> **URL produkcyjny:** _do uzupełnienia po deploymencie na Vercelu_ — np. `https://book-place-tpf.vercel.app`
 
-Deploy: **Vercel** (auto-deploy z ga��zi `main`).
+Deploy: **Vercel** (auto-deploy z gałęzi `main`).
 
 ## Stack technologiczny
 
 - **React 19** + **TypeScript** + **Vite**
 - **Material UI v7** (`@mui/material`, `@mui/icons-material`, `@mui/x-date-pickers`)
 - **React Router v7** (routing klienta, chronione trasy)
-- **Firebase Authentication** (email + has�o)
-- **react-ga4** � Google Analytics 4
-- **@hotjar/browser** � Hotjar (integracja w toku)
-- **Leaflet + react-leaflet** � mapa oferty
-- **FullCalendar** � kalendarz hosta
-- **Swiper** � galerie zdj��
+- **Firebase Authentication** (email + hasło)
+- **react-ga4** — Google Analytics 4
+- **@hotjar/browser** — Hotjar (integracja w toku)
+- **Leaflet + react-leaflet** — mapa oferty
+- **FullCalendar** — kalendarz hosta
+- **Swiper** — galerie zdjęć
 
 ## Struktura projektu
 
 ```
 BookPlace-TPF/
-+- frontend/                # ca�a aplikacja React
-�  +- src/
-�  �  +- pages/             # widoki przypisane do tras (React Router)
-�  �  +- components/
-�  �  �  +- common/         # reu�ywalne komponenty (Header, OfferCard, BookingCard, PaginationControls, UserMenu, ...)
-�  �  �  +- features/       # komponenty domenowe (auth, booking, chat, checkout, host, offer, search)
-�  �  �  +- layout/         # MainLayout
-�  �  +- contexts/auth/     # AuthContext + AuthProvider (Firebase Auth)
-�  �  +- database/client.ts # initializeApp + getAuth
-�  �  +- hooks/             # useAuth, useBooking, useChat, useOffers, useReviews
-�  �  +- mocks/             # mockowane dane offer�w, rezerwacji, czatu, recenzji
-�  �  +- models/            # typy TS (OfferModels, HostModels, ChatModels, ReviewModels)
-�  �  +- utils/ga.ts        # wrapper na react-ga4
-�  �  +- App.tsx            # definicja wszystkich tras + AnalyticsListener
-�  �  +- main.tsx           # BrowserRouter + ThemeProvider + AuthProvider
-�  +- .env.example
-�  +- vite.config.ts
-+- docs/screenshots/        # screeny do README
-+- README.md
+├── frontend/                # cała aplikacja React
+│   └── src/
+│       ├── pages/             # widoki przypisane do tras (React Router)
+│       ├── components/
+│       │   ├── common/        # reużywalne komponenty (Header, OfferCard, BookingCard, PaginationControls, UserMenu, ...)
+│       │   ├── features/      # komponenty domenowe (auth, booking, chat, checkout, host, offer, search)
+│       │   └── layout/        # MainLayout
+│       ├── contexts/auth/     # AuthContext + AuthProvider (Firebase Auth)
+│       ├── database/client.ts # initializeApp + getAuth
+│       ├── hooks/             # useAuth, useBooking, useChat, useOffers, useReviews
+│       ├── mocks/             # mockowane dane ofert, rezerwacji, czatu, recenzji
+│       ├── models/            # typy TS (OfferModels, HostModels, ChatModels, ReviewModels)
+│       ├── utils/ga.ts        # wrapper na react-ga4
+│       ├── App.tsx            # definicja wszystkich tras + AnalyticsListener
+│       └── main.tsx           # BrowserRouter + ThemeProvider + AuthProvider
+├── docs/screenshots/        # screeny do README
+└── README.md
 ```
 
-## Spe�nienie checklisty TPF
+## Spełnienie checklisty TPF
 
 | Wymaganie | Status | Gdzie w kodzie |
 |---|---|---|
-| Odwzorowanie prototypu | OK | wszystkie `pages/` + `components/` |
-| Routing wszystkich ekran�w (React Router) | OK | [frontend/src/App.tsx](frontend/src/App.tsx) � `<Routes>` |
-| Fallback 404 | _do uzupe�nienia_ | brak `<Route path="*" />` w `App.tsx` |
-| Podzia� na `pages/` | OK | [frontend/src/pages/](frontend/src/pages/) |
-| Reu�ywalne komponenty | OK | [frontend/src/components/common/](frontend/src/components/common/), [components/features/](frontend/src/components/features/) |
-| CSS / stylowanie | OK | MUI + theme [frontend/src/theme.ts](frontend/src/theme.ts) + `App.css`/`index.css` |
-| Firebase Authentication | OK | [frontend/src/database/client.ts](frontend/src/database/client.ts), [contexts/auth/AuthContext.tsx](frontend/src/contexts/auth/AuthContext.tsx), [components/features/auth/](frontend/src/components/features/auth/) |
-| Chronione trasy | OK | [components/features/auth/ProtectedRoute.tsx](frontend/src/components/features/auth/ProtectedRoute.tsx) |
-| Google Analytics (GA4) | OK | [frontend/src/utils/ga.ts](frontend/src/utils/ga.ts), [components/AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), inicjalizacja w [App.tsx](frontend/src/App.tsx) |
-| Hotjar | w toku | placeholder � integracja realizowana niezale�nie |
-| Deploy aplikacji | OK | Vercel (link wy�ej) |
-| README ze screenami | OK | ten plik |
+| Odwzorowanie prototypu | ✅ | wszystkie `pages/` + `components/` |
+| Routing wszystkich ekranów (React Router) | ✅ | [frontend/src/App.tsx](frontend/src/App.tsx) — `<Routes>` |
+| Podział na `pages/` | ✅ | [frontend/src/pages/](frontend/src/pages/) |
+| Reużywalne komponenty | ✅ | [frontend/src/components/common/](frontend/src/components/common/), [components/features/](frontend/src/components/features/) |
+| CSS / stylowanie | ✅ | MUI + theme [frontend/src/theme.ts](frontend/src/theme.ts) + `App.css` / `index.css` |
+| Firebase Authentication | ✅ | [frontend/src/database/client.ts](frontend/src/database/client.ts), [contexts/auth/AuthContext.tsx](frontend/src/contexts/auth/AuthContext.tsx), [components/features/auth/](frontend/src/components/features/auth/) |
+| Chronione trasy | ✅ | [components/features/auth/ProtectedRoute.tsx](frontend/src/components/features/auth/ProtectedRoute.tsx) |
+| Google Analytics (GA4) | ✅ | [frontend/src/utils/ga.ts](frontend/src/utils/ga.ts), [components/AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), inicjalizacja w [App.tsx](frontend/src/App.tsx) |
+| Hotjar | ⏳ | integracja realizowana niezależnie — placeholder w README |
+| Deploy aplikacji | ✅ | Vercel (link wyżej) |
+| README ze screenami | ✅ | ten plik |
 
 ## Lista tras (React Router)
 
-Publiczne:
-- `/` � landing
-- `/search` � wyniki wyszukiwania
-- `/offer/:offerId` � szczeg�y oferty
-- `/booking/checkout` � checkout
-- `/booking/confirmation` � potwierdzenie rezerwacji
-- `/my-bookings`, `/my-bookings/:bookingId` � moje rezerwacje
+**Publiczne:**
+- `/` — landing
+- `/search` — wyniki wyszukiwania
+- `/offer/:offerId` — szczegóły oferty
+- `/booking/checkout` — checkout
+- `/booking/confirmation` — potwierdzenie rezerwacji
+- `/my-bookings`, `/my-bookings/:bookingId` — moje rezerwacje
 
-Chronione (`ProtectedRoute`):
-- `/inbox` � skrzynka u�ytkownika
+**Chronione** (`ProtectedRoute` — wymaga zalogowania):
+- `/inbox` — skrzynka użytkownika
 
-Chronione + rola `HOST`:
+**Chronione + rola `HOST`:**
 - `/host/dashboard`
 - `/host/bookings`
 - `/host/calendar`
@@ -86,20 +83,20 @@ Chronione + rola `HOST`:
 
 ## Lokalne uruchomienie
 
-Wymagania: Node.js 20+ (lub 22).
+Wymagania: Node.js 20+.
 
 ```powershell
 cd frontend
-Copy-Item .env.example .env       # uzupe�nij warto�ci z konsoli Firebase + GA4
+Copy-Item .env.example .env       # uzupełnij wartości z konsoli Firebase + GA4
 npm install
 npm run dev
 ```
 
-Aplikacja dost�pna pod http://localhost:5173.
+Aplikacja dostępna pod http://localhost:5173.
 
-### Wymagane zmienne �rodowiskowe (`frontend/.env`)
+### Wymagane zmienne środowiskowe (`frontend/.env`)
 
-Pe�na lista (skopiuj z [frontend/.env.example](frontend/.env.example)):
+Pełna lista — skopiuj z [frontend/.env.example](frontend/.env.example):
 
 ```
 VITE_FIREBASE_API_KEY=
@@ -112,21 +109,21 @@ VITE_FIREBASE_MEASUREMENT_ID=
 VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-Warto�ci pobierasz z **Firebase Console -> Project settings -> Your apps -> SDK setup and configuration** oraz **Google Analytics -> Admin -> Data Streams -> Measurement ID**.
+Wartości pobierasz z **Firebase Console → Project settings → Your apps → SDK setup and configuration** oraz **Google Analytics → Admin → Data Streams → Measurement ID**.
 
-## Konta testowe / jak si� zalogowa�
+## Konta testowe / jak się zalogować
 
-Autentykacja oparta o **Firebase Authentication (email + has�o)**. Mo�esz albo:
+Autentykacja oparta o **Firebase Authentication (email + hasło)**. Możesz albo:
 
-1. **Zarejestrowa� w�asne konto** w aplikacji (przycisk �Sign in� w prawym g�rnym rogu -> zak�adka �Sign up�).
-2. **U�y� gotowych kont** (je�li zosta�y dodane do README poni�ej).
+1. **Zarejestrować własne konto** w aplikacji (przycisk „Sign in" w prawym górnym rogu → zakładka „Sign up").
+2. **Użyć gotowych kont** (poniżej).
 
-> Aby otrzyma� rol� `HOST` i widzie� trasy `/host/*`, email konta musi by� w domenie `@host.com` (fallback w [AuthContext.tsx](frontend/src/contexts/auth/AuthContext.tsx) gdy brak custom claims w Firebase).
+> Aby otrzymać rolę `HOST` i widzieć trasy `/host/*`, email konta musi być w domenie `@host.com` — logika w [AuthContext.tsx](frontend/src/contexts/auth/AuthContext.tsx).
 
-| Rola | Email | Has�o |
+| Rola | Email | Hasło |
 |---|---|---|
-| USER | _do uzupe�nienia_ | _do uzupe�nienia_ |
-| HOST | _do uzupe�nienia (np. demo@host.com)_ | _do uzupe�nienia_ |
+| USER | _do uzupełnienia_ | _do uzupełnienia_ |
+| HOST | _do uzupełnienia (np. demo@host.com)_ | _do uzupełnienia_ |
 
 ## Deploy
 
@@ -136,12 +133,12 @@ Aplikacja zhostowana na **Vercel** (darmowy plan Hobby). Konfiguracja:
 - **Framework Preset:** Vite (auto-detected)
 - **Build Command:** `npm run build`
 - **Output Directory:** `dist`
-- **Zmienne �rodowiskowe:** wszystkie `VITE_*` z `.env` ustawione w Project Settings -> Environment Variables.
-- **Firebase Authorized domains:** domena Vercela dodana w Firebase Console -> Authentication -> Settings -> Authorized domains.
+- **Zmienne środowiskowe:** wszystkie `VITE_*` z `.env` ustawione w Project Settings → Environment Variables.
+- **Firebase Authorized domains:** domena Vercela dodana w Firebase Console → Authentication → Settings → Authorized domains.
 
-Ka�dy push na `main` -> automatyczny deploy produkcyjny. Ka�dy PR -> Preview deployment z w�asnym URL-em.
+Każdy push na `main` → automatyczny deploy produkcyjny.
 
-## Zrzuty ekranu � aplikacja
+## Zrzuty ekranu — aplikacja
 
 > Pliki w [docs/screenshots/app/](docs/screenshots/app/).
 
@@ -151,7 +148,7 @@ Ka�dy push na `main` -> automatyczny deploy produkcyjny. Ka�dy PR -> Preview
 ### Wyszukiwanie ofert
 ![Search](docs/screenshots/app/search.png)
 
-### Szczeg�y oferty
+### Szczegóły oferty
 ![Offer](docs/screenshots/app/offer.png)
 
 ### Checkout
@@ -169,19 +166,19 @@ Ka�dy push na `main` -> automatyczny deploy produkcyjny. Ka�dy PR -> Preview
 ### Logowanie / rejestracja (modal)
 ![Login modal](docs/screenshots/app/login-modal.png)
 
-### Panel hosta � dashboard
+### Panel hosta — dashboard
 ![Host dashboard](docs/screenshots/app/host-dashboard.png)
 
-### Panel hosta � rezerwacje
+### Panel hosta — rezerwacje
 ![Host bookings](docs/screenshots/app/host-bookings.png)
 
-### Panel hosta � kalendarz
+### Panel hosta — kalendarz
 ![Host calendar](docs/screenshots/app/host-calendar.png)
 
-### Panel hosta � dodawanie oferty
+### Panel hosta — dodawanie oferty
 ![Host add offer](docs/screenshots/app/host-add-offer.png)
 
-## Zrzuty ekranu � Google Analytics
+## Zrzuty ekranu — Google Analytics
 
 > Pliki w [docs/screenshots/ga/](docs/screenshots/ga/).
 
@@ -194,9 +191,9 @@ Ka�dy push na `main` -> automatyczny deploy produkcyjny. Ka�dy PR -> Preview
 ### Events
 ![GA Events](docs/screenshots/ga/ga-events.png)
 
-## Zrzuty ekranu � Hotjar
+## Zrzuty ekranu — Hotjar
 
-> Integracja Hotjar realizowana niezale�nie. Poni�ej placeholdery � zostan� zast�pione realnymi screenami po wdro�eniu.
+> Integracja Hotjar realizowana niezależnie. Poniżej placeholdery — zostaną zastąpione realnymi screenami po wdrożeniu.
 >
 > Pliki w [docs/screenshots/hotjar/](docs/screenshots/hotjar/).
 
