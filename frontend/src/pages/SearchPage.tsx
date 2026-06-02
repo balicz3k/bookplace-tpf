@@ -211,9 +211,7 @@ const SearchPage: React.FC = () => {
   const visibleOffers = React.useMemo(() => {
     if (!canLoadMore) return [];
 
-    return Array.from({ length: visibleCount }, (_, index) =>
-      filteredOffers[index % totalItemsCount],
-    );
+    return filteredOffers.slice(0, visibleCount);
   }, [filteredOffers, totalItemsCount, visibleCount, canLoadMore]);
 
   React.useEffect(() => {
