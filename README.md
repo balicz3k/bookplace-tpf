@@ -17,7 +17,8 @@ Deploy: **Vercel** (auto-deploy z gałęzi `main`).
 - **React Router v7** (routing klienta, chronione trasy)
 - **Firebase Authentication** (email + hasło)
 - **react-ga4** — Google Analytics 4
-- **@hotjar/browser** — Hotjar (integracja w toku)
+- **@hotjar/browser** — Hotjar (heatmapy, nagrania sesji)
+- **Contentsquare UXA** — tag śledzący w `index.html` (panel Hotjar/Contentsquare)
 - **Leaflet + react-leaflet** — mapa oferty
 - **FullCalendar** — kalendarz hosta
 - **Swiper** — galerie zdjęć
@@ -39,7 +40,8 @@ BookPlace-TPF/
 │       ├── mocks/             # mockowane dane ofert, rezerwacji, czatu, recenzji
 │       ├── models/            # typy TS (OfferModels, HostModels, ChatModels, ReviewModels)
 │       ├── utils/ga.ts        # wrapper na react-ga4
-│       ├── App.tsx            # definicja wszystkich tras + AnalyticsListener
+│       ├── utils/hotjar.ts    # wrapper na @hotjar/browser
+│       ├── App.tsx            # definicja wszystkich tras + AnalyticsListener + init GA/Hotjar
 │       └── main.tsx           # BrowserRouter + ThemeProvider + AuthProvider
 ├── docs/screenshots/        # screeny do README
 └── README.md
@@ -57,7 +59,7 @@ BookPlace-TPF/
 | Firebase Authentication | ✅ | [frontend/src/database/client.ts](frontend/src/database/client.ts), [contexts/auth/AuthContext.tsx](frontend/src/contexts/auth/AuthContext.tsx), [components/features/auth/](frontend/src/components/features/auth/) |
 | Chronione trasy | ✅ | [components/features/auth/ProtectedRoute.tsx](frontend/src/components/features/auth/ProtectedRoute.tsx) |
 | Google Analytics (GA4) | ✅ | [frontend/src/utils/ga.ts](frontend/src/utils/ga.ts), [components/AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), inicjalizacja w [App.tsx](frontend/src/App.tsx) |
-| Hotjar | ⏳ | integracja realizowana niezależnie — placeholder w README |
+| Hotjar | ✅ | [frontend/src/utils/hotjar.ts](frontend/src/utils/hotjar.ts), init w [App.tsx](frontend/src/App.tsx), `stateChange` w [AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), tag Contentsquare w [index.html](frontend/index.html) |
 | Deploy aplikacji | ✅ | Vercel (link wyżej) |
 | README ze screenami | ✅ | ten plik |
 
@@ -107,9 +109,19 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
 VITE_FIREBASE_MEASUREMENT_ID=
 VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+VITE_HOTJAR_SITE_ID=1234567
 ```
 
-Wartości pobierasz z **Firebase Console → Project settings → Your apps → SDK setup and configuration** oraz **Google Analytics → Admin → Data Streams → Measurement ID**.
+Wartości pobierasz z **Firebase Console → Project settings → Your apps → SDK setup and configuration**, **Google Analytics → Admin → Data Streams → Measurement ID** oraz **Hotjar → Organization settings → Sites & Organizations** (numeryczny Site ID obok nazwy strony, lista: [insights.hotjar.com/site/list](https://insights.hotjar.com/site/list)).
+
+### Hotjar / Contentsquare
+
+Integracja składa się z dwóch elementów:
+
+1. **Tag Contentsquare** w [`frontend/index.html`](frontend/index.html) — weryfikacja instalacji w panelu „Get started → Verify installation”.
+2. **`@hotjar/browser`** — wymaganie labu; inicjalizacja w `App.tsx`, śledzenie zmian tras (SPA) w `AnalyticsListener.tsx`.
+
+Po deployu: wejdź na produkcję, klikaj po stronach 5–10 min, potem w panelu Hotjar (produkt **Observe**) zrób screeny do `docs/screenshots/hotjar/`.
 
 ## Konta testowe / jak się zalogować
 
@@ -193,9 +205,7 @@ Każdy push na `main` → automatyczny deploy produkcyjny.
 
 ## Zrzuty ekranu — Hotjar
 
-> Integracja Hotjar realizowana niezależnie. Poniżej placeholdery — zostaną zastąpione realnymi screenami po wdrożeniu.
->
-> Pliki w [docs/screenshots/hotjar/](docs/screenshots/hotjar/).
+> Pliki w [docs/screenshots/hotjar/](docs/screenshots/hotjar/). Zrób je w panelu Hotjar/Contentsquare (produkt **Observe** → Heatmaps / Session Replay) po kilku minutach ruchu na produkcji.
 
 ### Dashboard
 ![Hotjar dashboard](docs/screenshots/hotjar/hotjar-dashboard.png)

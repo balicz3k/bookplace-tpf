@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ga from './utils/ga';
+import hotjar from './utils/hotjar';
 import LandingPage from './pages/LandingPage';
 import MainLayout from './components/layout/MainLayout';
 import ProtectedRoute from './components/features/auth/ProtectedRoute';
@@ -25,6 +26,11 @@ export default function App() {
     const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID as string | undefined;
     if (measurementId) {
       ga.initialize(measurementId);
+    }
+
+    const siteId = Number(import.meta.env.VITE_HOTJAR_SITE_ID);
+    if (siteId) {
+      hotjar.initialize(siteId);
     }
   }, []);
 

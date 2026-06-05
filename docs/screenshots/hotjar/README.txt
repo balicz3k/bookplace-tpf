@@ -1,6 +1,6 @@
-Wrzu� tu screeny z panelu Hotjar po wdro�eniu integracji:
-- hotjar-dashboard.png
-- hotjar-heatmap.png
-- hotjar-recording.png
+Wrzuc tu screeny z panelu Hotjar/Contentsquare (produkt Observe):
+- hotjar-dashboard.png   (Overview / liczba sesji)
+- hotjar-heatmap.png     (Heatmaps)
+- hotjar-recording.png   (Session Replay / Recordings)
 
-Aktualnie wstawione s� placeholdery (hotjar-placeholder.png) � zast�p je realnymi screenami, gdy integracja b�dzie gotowa.
+Najpierw: deploy + Verify installation w panelu, potem 5-10 min testow na produkcji.
