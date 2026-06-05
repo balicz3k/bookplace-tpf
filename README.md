@@ -61,7 +61,7 @@ BookPlace-TPF/
 | Google Analytics (GA4) | ✅ | [frontend/src/utils/ga.ts](frontend/src/utils/ga.ts), [components/AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), inicjalizacja w [App.tsx](frontend/src/App.tsx) |
 | Hotjar | ✅ | [frontend/src/utils/hotjar.ts](frontend/src/utils/hotjar.ts), init w [App.tsx](frontend/src/App.tsx), `stateChange` w [AnalyticsListener.tsx](frontend/src/components/AnalyticsListener.tsx), tag Contentsquare w [index.html](frontend/index.html) |
 | Deploy aplikacji | ✅ | Vercel (link wyżej) |
-| README ze screenami | ✅ | ten plik |
+| README ze screenami | ⚠️ | screeny aplikacji w [docs/screenshots/app/](docs/screenshots/app/); GA + Hotjar — do uzupełnienia z paneli |
 
 ## Lista tras (React Router)
 

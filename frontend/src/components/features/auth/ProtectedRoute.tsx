@@ -19,16 +19,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
     );
   }
 
-  if (!isAuthenticated || !user) {
+  const screenshotMode = import.meta.env.VITE_SCREENSHOT_MODE === 'true';
+
+  if (!screenshotMode && (!isAuthenticated || !user)) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  if (allowedRoles && allowedRoles.length > 0) {
+  if (allowedRoles && allowedRoles.length > 0 && user) {
     const normalizedAllowed = allowedRoles.map((role) => role.toUpperCase());
     const hasRequiredRole = user.roles.some((role) =>
       normalizedAllowed.includes(role.toUpperCase()),
     );
-    if (!hasRequiredRole) {
+    if (!screenshotMode && !hasRequiredRole) {
       return <Navigate to="/" replace />;
     }
   }
