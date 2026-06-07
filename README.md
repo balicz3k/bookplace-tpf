@@ -187,8 +187,8 @@ Każdy push na `main` → automatyczny deploy produkcyjny.
 ### Panel hosta — kalendarz
 ![Host calendar](docs/screenshots/app/host-calendar.png)
 
-### Panel hosta — dodawanie oferty
-![Host add offer](docs/screenshots/app/host-add-offer.png)
+### Panel hosta — oferty
+![Host offers](docs/screenshots/app/host-offers.png)
 
 ## Zrzuty ekranu — Google Analytics
 
@@ -199,19 +199,3 @@ Każdy push na `main` → automatyczny deploy produkcyjny.
 
 ### Pages and screens
 ![GA Pages and screens](docs/screenshots/ga/ga-pages-and-screens.png)
-
-### Events
-![GA Events](docs/screenshots/ga/ga-events.png)
-
-## Zrzuty ekranu — Hotjar
-
-> Pliki w [docs/screenshots/hotjar/](docs/screenshots/hotjar/). Zrób je w panelu Hotjar/Contentsquare (produkt **Observe** → Heatmaps / Session Replay) po kilku minutach ruchu na produkcji.
-
-### Dashboard
-![Hotjar dashboard](docs/screenshots/hotjar/hotjar-dashboard.png)
-
-### Heatmapa
-![Hotjar heatmap](docs/screenshots/hotjar/hotjar-heatmap.png)
-
-### Recording
-![Hotjar recording](docs/screenshots/hotjar/hotjar-recording.png)
