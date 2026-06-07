@@ -124,7 +124,13 @@ const BookingCheckoutPage = () => {
               pathname: '/booking/confirmation',
               search: createSearchParams(confirmationParams).toString(),
             },
-            { replace: true }
+            { 
+              replace: true, 
+              state: {
+                offerName: offer?.title,
+                photoUrl: offer?.photos?.length ? (offer.photos.find(p => p.isCover)?.mediumUrl || offer.photos[0].mediumUrl) : null,
+              }
+            }
           );
         },
         onError: () => {
